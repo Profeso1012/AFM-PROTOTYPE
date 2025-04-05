@@ -35,7 +35,7 @@ PyDispatcher==2.0.7
 PyJWT==2.3.0
 pyOpenSSL==24.3.0
 pyparsing==2.4.7
-PyYAML==5.4.1
+PyYAML==6.0.1
 queuelib==1.7.0
 requests==2.32.3
 Scrapy==2.12.0
