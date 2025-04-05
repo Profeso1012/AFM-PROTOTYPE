@@ -1,3 +1,23 @@
+Perfect. Let’s **update and correct the README** to accurately reflect the real project structure and setup.
+
+---
+
+### ✅ Fix Plan
+
+We'll fix:
+
+1. `.env` explanation
+2. Correct working directory (`AFM-web-app-dev_v1.0`)
+3. Note that `requirements.txt` is in **root**, not inside `AFM-web-app-dev_v1.0`
+4. Add explicit instructions for:
+   - activating virtualenv
+   - creating `.env` if needed
+
+---
+
+### ✅ Updated README.md
+
+```md
 # Final Portfolio Project: Django Web Application
 
 ## Project Overview
@@ -6,80 +26,108 @@ This Django web application is the final portfolio project developed by Balogun 
 ## Project Features
 1. **Dynamic News Display**:
    - Fetches and displays news data (links, authors, and publication dates) dynamically from external sources.
-   - News data is not stored in the database to optimize space usage, but caching is implemented for faster load times.
-   - Pagination is supported for easy navigation of large datasets.
+   - Data is cached for performance but not persisted to the database.
+   - Pagination included.
 
-2. **Stock Profile**:
-   - The application displays listed companies in the stock market and crypto which shows
-   detailed information about them.
+2. **Stock & Crypto Profiles**:
+   - Displays detailed profiles of listed companies in the stock and crypto markets.
 
 3. **Image Integration**:
-   - Uses the Pillow library to include logos and images of news companies for a visually appealing interface.
+   - Uses Pillow to handle logos and other media.
 
 4. **User-Centric Design**:
-   - A clean and intuitive UI/UX, with the 'Sign Up' heading prominently centered and in bold to guide new users.
+   - Clean UI/UX with intuitive design, including a centered and bolded sign-up interface.
 
 5. **Django Backend**:
-   - Built on Django, leveraging its powerful ORM, templating system, and scalability to handle dynamic content.
+   - Built using Django with ORM, templating system, and solid backend logic.
+
+---
 
 ## Technologies Used
 - **Frontend**: HTML, CSS, JavaScript
-- **Backend**: Django, urllib3, request, bs4
+- **Backend**: Django, urllib3, requests, BeautifulSoup
 - **Database**: SQLite
-- **Libraries**: Pillow for image processing
-
-
-## Installation and Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo-url
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd project-directory
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Apply migrations:
-   ```bash
-   python manage.py migrate
-   ```
-
-5. Run the development server:
-   ```bash
-   python manage.py runserver
-   ```
-
-6. Access the application in your browser:
-   ```
-   http://127.0.0.1:8000
-   ```
-
-## How to Use
-1. Navigate to the homepage to view the latest news.
-2. Use pagination controls to browse through the news items.
-3. Click on a news item to get detailed news.
-4. Also, click on either the crypto or stock market
-dropdown through the financial market menu to get a list of them.
-5. You could filter and screen them based on your choice and view each
-profile individually.
-
-## Future Improvements
-- Explore database integration for optional persistent storage.
-- Include AI capabilities to provide deeper insights.
-- Add more news sources and customization options for users.
-- Optimize caching strategies for better performance.
-
-## Acknowledgements
-We thank the ALX mentors, classmates, and everyone who supported us throughout this project. Your guidance and feedback have been invaluable.
+- **Libraries**: Pillow, dateutil
 
 ---
+
+## Setup Instructions
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-repo-url
+cd AFM-PROTOTYPE
+```
+
+### 2. Create and activate virtual environment
+```bash
+python3 -m venv env
+source env/bin/activate  # on Windows: env\Scripts\activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+> ⚠️ `requirements.txt` is in the root directory.
+
+### 4. Create a `.env` file (if needed)
+Create a `.env` in the same folder as `manage.py` with your environment-specific variables like:
+```env
+DEBUG=True
+SECRET_KEY=your-secret-key
+```
+
+### 5. Navigate into Django project directory
+```bash
+cd AFM-web-app-dev_v1.0
+```
+
+### 6. Run migrations
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 7. Start the development server
+```bash
+python manage.py runserver
+```
+
+---
+
+## How to Use
+1. Homepage displays the latest news.
+2. Use pagination to browse.
+3. Click any news item for details.
+4. Navigate via Financial Market menu to Stock/Crypto sections.
+5. Use filters to screen and view company profiles.
+
+---
+
+## Future Improvements
+- Add persistent storage for news items
+- Integrate AI insights
+- Add more news sources
+- Improve caching strategies
+
+---
+
+## Acknowledgements
+We thank ALX mentors, classmates, and supporters for their help and encouragement.
+
+---
+
 Developed by: **Balogun A.D. & Orngu E.O.**  
 Date: Wednesday 22nd January, 2025
 
-Feel free to reach out to us for collaborations or inquiries!
+> _Feel free to reach out for collaborations or inquiries!_
+```
+
+---
+
+Would you like this pushed to `README.md` in your repo?
+
+**a.** Add `.env.example` to the project root  
+**b.** Auto-generate `.env` validator on `manage.py runserver`
