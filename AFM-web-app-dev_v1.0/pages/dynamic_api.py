@@ -88,35 +88,52 @@ class NairaMetrics(News_API):
     def get_market_news(self):
         # Function to get market news from news feed.
         # Returns a list containing news data.
-        html = Request('https://nairametrics.com/category/market-news/feed/', headers=headers) # Parses the data with the headers.
-        req = urlopen(html) # Returns the page feed
+        try:
+            html = Request('https://nairametrics.com/category/market-news/feed/', headers=headers) # Parses the data with the headers.
+            req = urlopen(html, timeout=10) # Returns the page feed with timeout
+            
+            bs = BeautifulSoup(req, 'xml') # Uses beautiful soup to parse the feed through xml parser.
+            items = bs.select('item') # Select all xml elements with the item tag.
+
+            for item in items:
+                # Loops through all item tags
+                Title = item.select_one('title').text  # Extract title
+                Link = item.select_one('link').text  # Extract link
+
+                _description_html = item.select_one('description').text # Extract desciption html.
+                _description_soup = BeautifulSoup(_description_html, 'html.parser').find('p') # Pareses the html and finds the p tag.
+                Description = _description_soup.get_text(separator=' ', strip=True)  # Extract description from p tag.
+
+                Date = item.select_one('pubDate').text  # Extract pubDate
+                Author = item.find('dc:creator').text.strip() # Extract creator
+                # Category = item.select_one('category').text  # Extract all categories
+
+                # Appends extracted elements to the list.
+                self.add_data(Title=Title,
+                              Author=Author,
+                              Publishers=self.Publishers,
+                              Description=Description,
+                              Link=Link,
+                              Image=self.Image_path,
+                              Date=Date)
+
+            return self.get_data()
         
-        bs = BeautifulSoup(req, 'xml') # Uses beautiful soup to parse the feed through xml parser.
-        items = bs.select('item') # Select all xml elements with the item tag.
-
-        for item in items:
-            # Loops through all item tags
-            Title = item.select_one('title').text  # Extract title
-            Link = item.select_one('link').text  # Extract link
-
-            _description_html = item.select_one('description').text # Extract desciption html.
-            _description_soup = BeautifulSoup(_description_html, 'html.parser').find('p') # Pareses the html and finds the p tag.
-            Description = _description_soup.get_text(separator=' ', strip=True)  # Extract description from p tag.
-
-            Date = item.select_one('pubDate').text  # Extract pubDate
-            Author = item.find('dc:creator').text.strip() # Extract creator
-            # Category = item.select_one('category').text  # Extract all categories
-
-            # Appends extracted elements to the list.
-            self.add_data(Title=Title,
-                          Author=Author,
-                          Publishers=self.Publishers,
-                          Description=Description,
-                          Link=Link,
-                          Image=self.Image_path,
-                          Date=Date)
-
-        return self.get_data()
+        except (HTTPError, URLError) as e:
+            # Handle network errors gracefully
+            print(f"Error fetching market news: {e}")
+            # Return empty list or cached data instead of crashing
+            return self.get_data() if self.Data else [
+                {
+                    'Title': 'Market News Unavailable',
+                    'Author': 'System',
+                    'Publishers': self.Publishers,
+                    'Description': 'Unable to fetch market news at the moment. Please try again later.',
+                    'Link': '#',
+                    'Image': self.Image_path,
+                    'Date': datetime.now().strftime('%Y-%m-%d')
+                }
+            ]
 
 
 class ThisDailyLive(News_API):

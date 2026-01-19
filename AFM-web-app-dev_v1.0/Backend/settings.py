@@ -145,3 +145,7 @@ AUTHENTICATION_BACKENDS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Paystack Configuration
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY', 'sk_test_aff7862c120369380fb5c0dafad7d49bd5b5899c')
+PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY', 'pk_test_8a2d59e83a64e24c12a6a2c8f9b7e4d1')

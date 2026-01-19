@@ -1,0 +1,419 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - AstraFidelis LLC{% endblock %}
+{% block content %}
+<style>
+    .checkout-wrapper {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: calc(100vh - 80px);
+        padding: 2rem 0;
+    }
+
+    .checkout-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .checkout-header {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .checkout-header h1 {
+        margin: 0 0 0.5rem 0;
+        color: #333;
+    }
+
+    .checkout-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .checkout-form {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .form-section h3 {
+        margin: 0 0 1rem 0;
+        color: #333;
+        font-size: 1.1rem;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    /* Order Summary */
+    .order-summary {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+    }
+
+    .summary-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0 0 1.5rem 0;
+        color: #333;
+    }
+
+    .plan-info {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #667eea;
+    }
+
+    .plan-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .plan-description {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .summary-row strong {
+        color: #333;
+    }
+
+    .summary-divider {
+        border-top: 2px solid #eee;
+        margin: 1rem 0;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .summary-total .amount {
+        color: #667eea;
+    }
+
+    .feature-list {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+
+    .feature-list h4 {
+        margin: 0 0 0.8rem 0;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .feature-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-list li {
+        padding: 0.4rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .feature-list li::before {
+        content: '✓ ';
+        color: #28a745;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    /* Buttons */
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-primary {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.02);
+    }
+
+    .btn-cancel {
+        flex: 1;
+        background: #6c757d;
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: background 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #5a6268;
+    }
+
+    .paystack-info {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .checkout-content {
+            grid-template-columns: 1fr;
+        }
+
+        .order-summary {
+            position: static;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="checkout-wrapper">
+    <div class="checkout-container">
+        <!-- Header -->
+        <div class="checkout-header">
+            <h1>Complete Your Subscription</h1>
+            <p>Secure payment powered by Paystack</p>
+        </div>
+
+        <div class="checkout-content">
+            <!-- Checkout Form -->
+            <div class="checkout-form">
+                <form method="post" id="checkout-form">
+                    {% csrf_token %}
+
+                    <!-- Billing Information -->
+                    <div class="form-section">
+                        <h3>Billing Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="full_name">Full Name</label>
+                            <input type="text" id="full_name" value="{{ user.full_name }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" value="{{ user.email }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+234 (Your Phone Number)" required>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Details -->
+                    <div class="form-section">
+                        <h3>Subscription Details</h3>
+                        
+                        <div class="form-group">
+                            <label>Plan: <strong>{{ plan.get_tier_display }}</strong></label>
+                            <p style="color: #666; margin: 0.5rem 0 0 0;">
+                                {{ plan.description }}
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="duration">Billing Cycle</label>
+                            <select id="duration" name="duration" required>
+                                <option value="1">1 Month</option>
+                                <option value="3">3 Months (Save 5%)</option>
+                                <option value="6">6 Months (Save 10%)</option>
+                                <option value="12">1 Year (Save 15%)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label style="display: flex; gap: 0.5rem;">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <span>I agree to the Terms & Conditions and understand this is a recurring monthly subscription</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Proceed to Payment</button>
+                        <a href="{% url 'profile' %}" class="btn-cancel">Cancel</a>
+                    </div>
+
+                    <p class="paystack-info">
+                        🔒 All transactions are secure and encrypted by Paystack
+                    </p>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <div class="summary-title">Order Summary</div>
+
+                <div class="plan-info">
+                    <div class="plan-name">{{ plan.get_tier_display }}</div>
+                    <div class="plan-description">{{ plan.description }}</div>
+                </div>
+
+                <div class="feature-list">
+                    <h4>What's Included:</h4>
+                    <ul>
+                        {% for feature in plan.features %}
+                            <li>{{ feature }}</li>
+                        {% empty %}
+                            <li>Access to premium features</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row">
+                    <strong>Subtotal:</strong>
+                    <span>₦{{ plan.price_monthly }}</span>
+                </div>
+
+                <div class="summary-row">
+                    <strong>Renewal:</strong>
+                    <span>Monthly</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+                    <span>Total Due:</span>
+                    <span class="amount">₦{{ plan.price_monthly }}</span>
+                </div>
+
+                <p style="font-size: 0.85rem; color: #999; margin-top: 1rem; text-align: center;">
+                    Your first payment is due today.<br>
+                    Automatic renewal monthly.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Calculate discount on duration change
+    document.addEventListener('DOMContentLoaded', function() {
+        var durationSelect = document.getElementById('duration');
+        if (durationSelect) {
+            durationSelect.addEventListener('change', function() {
+                var months = parseInt(this.value);
+                var discountPercent = 0;
+                
+                if (months === 3) discountPercent = 5;
+                if (months === 6) discountPercent = 10;
+                if (months === 12) discountPercent = 15;
+                
+                // Update summary with discount calculation
+                console.log('Selected ' + months + ' months, discount: ' + discountPercent + '%');
+            });
+        }
+    });
+</script>
+
+{% endblock %}

@@ -98,14 +98,46 @@
         border-radius: 5px;
         box-sizing: border-box;
       }
+      
+      /* Logo link styling */
+      .company-logo {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+      
+      .company-logo:hover {
+        transform: scale(1.05);
+      }
+      
+      /* Auth link styling */
+      .auth-links {
+        text-align: center;
+        margin-top: 1.5em;
+        font-size: 0.95em;
+      }
+      
+      .auth-links a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      .auth-links a:hover {
+        text-decoration: underline;
+      }
 </style>
 <div class="main-container">
     <div class="form-container">
-        <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="company-logo">
+        <a href="{% url 'home' %}" style="display: block; margin: 0 auto 1em auto; width: fit-content;">
+            <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="company-logo">
+        </a>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn submit-btn">Login</button>
         </form>
+        <div class="auth-links">
+            Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+        </div>
 </div>
 {% endblock %}

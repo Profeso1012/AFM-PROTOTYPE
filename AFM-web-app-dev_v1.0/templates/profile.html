@@ -4,118 +4,526 @@
 {% block title %}Profile - AstraFidelis LLC{% endblock %}
 {% block content %}
 <style>
-    /* Profile Picture Container */
-    /* Profile Picture Container */
-    .profile-picture-container {
-    width: 200px;
-    height: auto;  /* Changed from fixed height to auto */
-    margin: 2rem auto 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    overflow: visible;  /* Changed from hidden to visible */
+    .profile-wrapper {
+        background: linear-gradient(135deg, #28bcda 0%, #3b7ac7 100%);
+        min-height: calc(100vh - 80px);
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
     }
 
-    /* Profile Picture */
-    .profile-picture {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border: 3px solid #0c4da2;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    display: block;  /* Added to ensure proper rendering */
+    .profile-content {
+        width: 80%;
+        max-width: 1200px;
     }
-    
-    /* Form styling */
-    #profile-picture-form {
-        width: 100%;
+
+    /* Profile Header */
+    .profile-header {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         display: flex;
-        flex-direction: column;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #667eea;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header-content {
+        flex: 1;
+    }
+
+    .profile-header h1 {
+        margin: 0 0 0.5rem 0;
+        color: #333;
+        font-size: 2rem;
+    }
+
+    .profile-header p {
+        color: #666;
+        margin: 0.25rem 0;
+        font-size: 1rem;
+    }
+
+    .profile-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #999;
+    }
+
+    /* Subscription Section */
+    .subscription-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin: 0 0 1.5rem 0;
+        color: #333;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 0.5rem;
+        display: flex;
         align-items: center;
         gap: 0.5rem;
     }
-    
-    /* Button styling */
-    #profile-picture-form button {
-        width: auto;
-        min-width: 120px;  /* Reduced from 150px */
-        padding: 0.4rem 0.8rem;  /* Reduced padding */
-        font-size: 0.9rem;  /* Reduced font size */
-        background-color: #666;
+
+    .section-icon {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+    }
+
+    .current-tier-display {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .tier-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .tier-benefit {
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+
+    /* Subscription Tiers Grid */
+    .tiers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    .tier-card {
+        border: 2px solid #eee;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .tier-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        transform: translateY(-5px);
+    }
+
+    .tier-card.active {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        border-width: 3px;
+    }
+
+    .tier-card.active::before {
+        content: '✓ ACTIVE';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .tier-card-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .tier-price {
+        font-size: 2rem;
+        color: #667eea;
+        margin: 1rem 0;
+        font-weight: bold;
+    }
+
+    .tier-price-period {
+        font-size: 0.9rem;
+        color: #999;
+    }
+
+    .tier-features {
+        list-style: none;
+        padding: 1.5rem 0;
+        margin: 0;
+        text-align: left;
+    }
+
+    .tier-features li {
+        padding: 0.5rem 0;
+        color: #666;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .tier-features li:last-child {
+        border-bottom: none;
+    }
+
+    .tier-features li::before {
+        content: '✓ ';
+        color: #28a745;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    .tier-action {
+        margin-top: 1.5rem;
+    }
+
+    .btn-upgrade {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        border-radius: 15px;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        font-weight: bold;
+        transition: transform 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
     }
-    
-    #profile-picture-form button:hover {
-        background-color: #555;
+
+    .btn-upgrade:hover {
+        transform: scale(1.05);
     }
-    
-    #submit-btn {
-        background-color: #0c4da2 !important;
+
+    .btn-upgrade:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
     }
-    
-    #submit-btn:hover {
-        background-color: #0a3d82 !important;
+
+    .btn-manage {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
+
+    .btn-manage:hover {
+        background: #5a6268;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .benefit-card {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .benefit-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .benefit-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .benefit-title {
+        font-weight: bold;
+        color: #333;
+        margin: 0.5rem 0;
+    }
+
+    .benefit-desc {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .profile-content {
+            width: 85%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .profile-content {
+            width: 90%;
+        }
+
+        .profile-header {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .profile-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tiers-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
-<div class="profile-container">
-    <div class="profile-picture-container">
-        <!-- If user has a profile picture, show it, otherwise show default -->
-        {% if user.profile_picture %}
-        <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
-        {% else %}
-        <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture" class="profile-picture">
-        {% endif %}
-        <form method="post" enctype="multipart/form-data" id="profile-picture-form">
-            {% csrf_token %}
+
+<div class="profile-wrapper">
+    <div class="profile-content">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'images/default-profile.png' %}{% endif %}" alt="Profile" class="profile-avatar">
+            <div class="profile-header-content">
+                <h1>Welcome, {{ user.full_name }}</h1>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Age:</strong> {{ user.age }}</p>
+                <p><strong>Member Since:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">{{ user.subscription_tier|upper }}</div>
+                        <div class="stat-label">Current Tier</div>
+                    </div>
+                    {% if user.subscription_end_date %}
+                    <div class="stat">
+                        <div class="stat-value">{{ user.subscription_end_date|date:"M d" }}</div>
+                        <div class="stat-label">Renewal Date</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscription Section -->
+        <div class="subscription-section">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3 14v4a4 4 0 004 4h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Subscription Tiers
+            </h2>
             
-            <!-- Hidden file input, this is triggered by the button -->
-            <input type="file" name="profile_picture" accept="image/*" class="form-control" id="profile-picture-input" style="display: none;">
-            
-            <!-- Update button that triggers the file input -->
-            <button type="button" class="btn btn-secondary" onclick="document.getElementById('profile-picture-input').click();">Update Profile Picture</button>
-            
-            <!-- Submit button to save the uploaded picture -->
-            <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Save Picture</button>
-          </form>
-        
-    </div>
-    <h1 class="welcome-message">WELCOME {{ user.full_name|upper }}</h1>
+            {% if user.is_subscribed %}
+            <div class="current-tier-display">
+                <div class="tier-name">You are on the {{ user.get_subscription_tier_display }}</div>
+                <div class="tier-benefit">
+                    {% if user.subscription_tier == 'basic' %}
+                        Enjoy WhatsApp Group Access with exclusive market updates and financial tips
+                    {% elif user.subscription_tier == 'premium' %}
+                        Get personal sessions with our team and priority customer support
+                    {% elif user.subscription_tier == 'elite' %}
+                        Experience VIP support with expert analyst sessions and personalized guidance
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="current-tier-display">
+                <div class="tier-name">You are currently on the Free Tier</div>
+                <div class="tier-benefit">Upgrade to access exclusive features and personalized investment guidance</div>
+            </div>
+            {% endif %}
 
-    <form class="profile-form">
-        <label for="full_name">Full Name</label>
-        <input type="text" id="full_name" value="{{ user.full_name }}" disabled>
+            <div class="tiers-grid">
+                <!-- Free Tier -->
+                <div class="tier-card {% if user.subscription_tier == 'free' %}active{% endif %}">
+                    <div class="tier-card-name">Free</div>
+                    <div class="tier-price">$0<span class="tier-price-period">/month</span></div>
+                    <ul class="tier-features">
+                        <li>Access to market news</li>
+                        <li>Financial literacy articles</li>
+                        <li>Basic stock profiles</li>
+                        <li>Community forum access</li>
+                    </ul>
+                    <div class="tier-action">
+                        {% if user.subscription_tier == 'free' %}
+                            <button class="btn-upgrade" disabled>Current Plan</button>
+                        {% else %}
+                            <a href="{% url 'downgrade_subscription' 'free' %}" class="btn-upgrade">Downgrade</a>
+                        {% endif %}
+                    </div>
+                </div>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" value="{{ user.email }}" disabled>
+                <!-- Basic Tier -->
+                <div class="tier-card {% if user.subscription_tier == 'basic' %}active{% endif %}">
+                    <div class="tier-card-name">Basic</div>
+                    <div class="tier-price">₦5,000<span class="tier-price-period">/month</span></div>
+                    <ul class="tier-features">
+                        <li>WhatsApp group access</li>
+                        <li>Daily market updates</li>
+                        <li>Buy/sell recommendations</li>
+                        <li>Financial tips & habits</li>
+                        <li>Weekly quizzes</li>
+                    </ul>
+                    <div class="tier-action">
+                        {% if user.subscription_tier == 'basic' %}
+                            <button class="btn-upgrade" disabled>Current Plan</button>
+                            <a href="{% url 'manage_subscription' %}" class="btn-manage">Manage</a>
+                        {% else %}
+                            <a href="{% url 'checkout' 'basic' %}" class="btn-upgrade">Upgrade</a>
+                        {% endif %}
+                    </div>
+                </div>
 
-        <label for="age">Age</label>
-        <input type="number" id="age" value="{{ user.age }}" disabled>
+                <!-- Premium Tier -->
+                <div class="tier-card {% if user.subscription_tier == 'premium' %}active{% endif %}">
+                    <div class="tier-card-name">Premium</div>
+                    <div class="tier-price">₦15,000<span class="tier-price-period">/month</span></div>
+                    <ul class="tier-features">
+                        <li>All Basic features</li>
+                        <li>Monthly personal sessions</li>
+                        <li>Priority email support</li>
+                        <li>Advanced analytics</li>
+                        <li>Custom reports</li>
+                    </ul>
+                    <div class="tier-action">
+                        {% if user.subscription_tier == 'premium' %}
+                            <button class="btn-upgrade" disabled>Current Plan</button>
+                            <a href="{% url 'manage_subscription' %}" class="btn-manage">Manage</a>
+                        {% else %}
+                            <a href="{% url 'checkout' 'premium' %}" class="btn-upgrade">Upgrade</a>
+                        {% endif %}
+                    </div>
+                </div>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" value="********" disabled>
-        <a href="{% url 'password_reset' %}" class="reset-password">Reset Password</a>
-    </form>
+                <!-- Elite Tier -->
+                <div class="tier-card {% if user.subscription_tier == 'elite' %}active{% endif %}">
+                    <div class="tier-card-name">Elite</div>
+                    <div class="tier-price">₦50,000<span class="tier-price-period">/month</span></div>
+                    <ul class="tier-features">
+                        <li>All Premium features</li>
+                        <li>Weekly expert sessions</li>
+                        <li>Dedicated account manager</li>
+                        <li>Portfolio review & strategy</li>
+                        <li>24/7 VIP support</li>
+                    </ul>
+                    <div class="tier-action">
+                        {% if user.subscription_tier == 'elite' %}
+                            <button class="btn-upgrade" disabled>Current Plan</button>
+                            <a href="{% url 'manage_subscription' %}" class="btn-manage">Manage</a>
+                        {% else %}
+                            <a href="{% url 'checkout' 'elite' %}" class="btn-upgrade">Upgrade</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h2 class="active-subscription">Active Subscription</h2>
-    <div class="subscriptions">
-        <div class="subscription-card"><i class="fa fa-check-circle"></i></div>
-        <div class="subscription-card"><i class="fa fa-check-circle"></i></div>
-        <div class="subscription-card"><i class="fa fa-check-circle"></i></div>
-        <div class="subscription-card"><i class="fa fa-times-circle"></i></div>
+        <!-- Benefits Section -->
+        <div class="benefits-section">
+            <h2 class="section-title">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 7v5l4 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Why Subscribe?
+            </h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="17 6 23 6 23 12" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Expert Guidance</div>
+                    <div class="benefit-desc">Learn from financial experts and market analysts</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Community Access</div>
+                    <div class="benefit-desc">Connect with like-minded investors in our WhatsApp group</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="12" y1="2" x2="12" y2="22" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Real-Time Insights</div>
+                    <div class="benefit-desc">Get daily market updates and trading recommendations</div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Financial Literacy</div>
+                    <div class="benefit-desc">Build wealth through continuous learning and support</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<script>
-    // Show submit button when file is selected
-    document.getElementById('profile-picture-input').addEventListener('change', function() {
-      if (this.files.length > 0) {
-        document.getElementById('submit-btn').style.display = 'inline-block';  // Show the submit button
-      }
-    });
-  </script>
+
 {% endblock %}

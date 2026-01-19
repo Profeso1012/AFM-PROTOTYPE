@@ -151,6 +151,33 @@
         font-size: 0.8em;
         margin-top: 0.3em;
     }
+    
+    /* Logo link styling */
+    .logo {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    
+    .logo:hover {
+        transform: scale(1.05);
+    }
+    
+    /* Auth link styling */
+    .auth-links {
+        text-align: center;
+        margin-top: 1.5em;
+        font-size: 0.95em;
+    }
+    
+    .auth-links a {
+        color: #0c4da2;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .auth-links a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <h1 class="signup-title">SIGN UP</h1>
@@ -173,7 +200,9 @@
     <!-- Form Block -->
     <div class="form-container">
         <div class="signup-form">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            <a href="{% url 'home' %}" style="display: block; width: fit-content; margin: 0 auto 1em auto;">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            </a>
             <form method="POST">
                 {% csrf_token %}
 
@@ -223,6 +252,10 @@
                 </div>
             
                 <button type="submit">SUBMIT</button>
+                
+                <div class="auth-links">
+                    Already have an account? <a href="{% url 'login' %}">Log In</a>
+                </div>
             </form>
         </div>
     </div>

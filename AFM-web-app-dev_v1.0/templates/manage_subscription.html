@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Subscription - AstraFidelis LLC{% endblock %}
+{% block content %}
+<style>
+    .manage-wrapper {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: calc(100vh - 80px);
+        padding: 2rem 0;
+    }
+
+    .manage-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .manage-header {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .manage-header h1 {
+        margin: 0 0 0.5rem 0;
+        color: #333;
+    }
+
+    .manage-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #667eea;
+    }
+
+    .subscription-info {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .info-value {
+        color: #667eea;
+        font-weight: bold;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-secondary {
+        flex: 1;
+        background: #6c757d;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: background 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    .btn-danger {
+        flex: 1;
+        background: #dc3545;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transition: background 0.2s ease;
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+    }
+
+    .feature-list {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+
+    .feature-list h4 {
+        margin: 0 0 0.8rem 0;
+        color: #333;
+    }
+
+    .feature-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-list li {
+        padding: 0.4rem 0;
+        color: #666;
+    }
+
+    .feature-list li::before {
+        content: '✓ ';
+        color: #28a745;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1.5rem;
+    }
+
+    .alert-info {
+        background: #cfe2ff;
+        color: #084298;
+        border: 1px solid #b6d4fe;
+    }
+
+    .alert-warning {
+        background: #fff3cd;
+        color: #664d03;
+        border: 1px solid #ffecb5;
+    }
+
+    @media (max-width: 768px) {
+        .info-row {
+            flex-direction: column;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .action-buttons button,
+        .action-buttons a {
+            min-width: 100%;
+        }
+    }
+</style>
+
+<div class="manage-wrapper">
+    <div class="manage-container">
+        <!-- Header -->
+        <div class="manage-header">
+            <h1>Manage Your Subscription</h1>
+            <p>View and update your subscription details</p>
+        </div>
+
+        <!-- Current Subscription -->
+        <div class="manage-section">
+            <h2 class="section-title">Current Subscription</h2>
+            
+            {% if user.is_subscribed %}
+                <div class="alert alert-info">
+                    ✓ You have an active subscription
+                </div>
+
+                <div class="subscription-info">
+                    <div class="info-row">
+                        <span class="info-label">Plan:</span>
+                        <span class="info-value">{{ user.get_subscription_tier_display }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Started:</span>
+                        <span class="info-value">{{ user.subscription_start_date|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Renewal Date:</span>
+                        <span class="info-value">{{ user.subscription_end_date|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Days Remaining:</span>
+                        <span class="info-value">
+                            {% with days_left=user.subscription_end_date|timeuntil %}
+                                {% if days_left %}
+                                    ~{{ user.subscription_end_date|date:"j" }} days
+                                {% else %}
+                                    Expired
+                                {% endif %}
+                            {% endwith %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="feature-list">
+                    <h4>Your Benefits:</h4>
+                    <ul>
+                        {% if user.subscription_tier == 'basic' %}
+                            <li>WhatsApp group access with exclusive updates</li>
+                            <li>Daily market updates and trends</li>
+                            <li>Buy/sell recommendations</li>
+                            <li>Financial tips & money habits</li>
+                            <li>Weekly financial quizzes</li>
+                        {% elif user.subscription_tier == 'premium' %}
+                            <li>All Basic features</li>
+                            <li>Monthly personal sessions with experts</li>
+                            <li>Priority email support</li>
+                            <li>Advanced analytics and insights</li>
+                            <li>Custom reports</li>
+                        {% elif user.subscription_tier == 'elite' %}
+                            <li>All Premium features</li>
+                            <li>Weekly expert sessions</li>
+                            <li>Dedicated account manager</li>
+                            <li>Personalized portfolio strategy</li>
+                            <li>24/7 VIP support</li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{% url 'profile' %}" class="btn-secondary">View All Plans</a>
+                    <button class="btn-danger" onclick="if(confirm('Are you sure you want to cancel your subscription?')) { window.location.href='{% url 'downgrade_subscription' 'free' %}'; }">
+                        Cancel Subscription
+                    </button>
+                </div>
+
+            {% else %}
+                <div class="alert alert-warning">
+                    You don't have an active subscription. Upgrade to unlock premium features!
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{% url 'profile' %}" class="btn-primary">View Plans</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Billing History (Placeholder) -->
+        <div class="manage-section">
+            <h2 class="section-title">Billing Information</h2>
+            
+            <div class="subscription-info">
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{ user.email }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Account Status:</span>
+                    <span class="info-value">
+                        {% if user.is_subscribed %}
+                            <span style="color: #28a745;">Active</span>
+                        {% else %}
+                            <span style="color: #dc3545;">Inactive</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div style="text-align: center;">
+            <a href="{% url 'profile' %}" class="btn-secondary" style="max-width: 200px;">← Back to Profile</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
