@@ -66,7 +66,7 @@ class HomePageView(ListView):
 
 class NewsListView(ListView):
     '''
-    Class-based view to display paginated news from various sources.
+    Class-based view to display paginated news from various sources with search functionality.
     '''
     template_name = "news.html"
     context_object_name = "news"  # Variable name in the template
@@ -75,9 +75,10 @@ class NewsListView(ListView):
     def get_queryset(self):
         '''
         Override the method to dynamically fetch and filter news.
+        Implements keyword search filtering based on title and description.
         
         Return:
-        - List of today's news items from multiple sources.
+        - List of news items, optionally filtered by search query.
         '''
         # Fetch news from different sources
         nairametrics = NairaMetrics().get_market_news()
@@ -107,7 +108,43 @@ class NewsListView(ListView):
                     print(f"Error parsing date: {news_date}, Error: {e}")
                     continue
 
+        # Get search query from GET parameters
+        search_query = self.request.GET.get('q', '').strip()
+        
+        # Filter by search query if provided
+        if search_query:
+            search_terms = search_query.lower().split()
+            filtered_news = []
+            
+            for news_item in NEWS:
+                # Get title and description
+                title = (news_item.get('Title') or '').lower()
+                description = (news_item.get('Description') or '').lower()
+                publisher = (news_item.get('Publishers') or '').lower()
+                
+                # Check if any search term matches
+                match_found = False
+                for term in search_terms:
+                    if term in title or term in description or term in publisher:
+                        match_found = True
+                        break
+                
+                if match_found:
+                    filtered_news.append(news_item)
+            
+            return filtered_news
+        
         return NEWS
+
+    def get_context_data(self, **kwargs):
+        '''
+        Add search query and filtered news count to context.
+        '''
+        context = super().get_context_data(**kwargs)
+        search_query = self.request.GET.get('q', '').strip()
+        context['search_query'] = search_query
+        context['news_count'] = len(self.get_queryset())
+        return context
 
 class FinancialMarketView(TemplateView):
     template_name = 'financial_market.html'

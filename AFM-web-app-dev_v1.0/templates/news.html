@@ -4,13 +4,28 @@
 <div class="news-page-container">
     <h1 class="news-page-title">LATEST NEWS</h1>
     
-    <div class="news-filter-container text-center">
-        <select class="news-filter-select">
-            <option selected>Filter...</option>
-            <option value="1">Category 1</option>
-            <option value="2">Category 2</option>
-            <option value="3">Category 3</option>
-        </select>
+    <div class="news-search-container text-center" style="margin-bottom: 20px;">
+        <form method="GET" class="news-search-form" id="news-search-form">
+            <div class="input-group news-search-input-group">
+                <input type="text" 
+                       class="form-control" 
+                       name="q" 
+                       placeholder="Search articles by keywords..." 
+                       value="{{ search_query }}"
+                       aria-label="Search news articles">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                {% if search_query %}
+                    <a href="{% url 'news_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+        {% if search_query %}
+            <p class="search-results-info">Showing results for: <strong>{{ search_query }}</strong> ({{ news_count }} articles)</p>
+        {% endif %}
     </div>
 
     <div class="news-article-grid">
@@ -71,27 +86,27 @@
         <ul class="pagination news-pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page=1">First</a>
+                <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}">First</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">&laquo;</a>
             </li>
             {% endif %}
 
             {% for i in page_obj.paginator.page_range %}
                 {% if i >= page_obj.number|add:-2 and i <= page_obj.number|add:2 %}
                     <li class="page-item {% if i == page_obj.number %}active{% endif %}">
-                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        <a class="page-link" href="?page={{ i }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ i }}</a>
                     </li>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">&raquo;</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}">Last</a>
             </li>
             {% endif %}
         </ul>
