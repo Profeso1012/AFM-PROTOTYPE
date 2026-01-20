@@ -91,13 +91,12 @@ try:
 except Exception as e:
     print(f"MongoDB connection error: {e}")
 
-# Django + MongoDB using Djongo
+# Django still needs a default database for auth, sessions, etc.
+# Use SQLite for Django internals, MongoDB for your app data
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'CLIENT': {
-            'host': MONGODB_URI,
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',  # Use in-memory SQLite for stateless builds
     }
 }
 
