@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # MongoDB Connection
-MONGODB_URI = "mongodb+srv://eoluwaseyi:Ez2bduu12b@cluster0.cukhcj8.mongodb.net/?appName=Cluster0"
+MONGODB_URI = os.getenv('MONGODB_URI', "mongodb+srv://eoluwaseyi:Ez2bduu12b@cluster0.cukhcj8.mongodb.net/?appName=Cluster0")
 
 try:
     mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
@@ -91,11 +91,13 @@ try:
 except Exception as e:
     print(f"MongoDB connection error: {e}")
 
-# For Django compatibility, we will use Django with MongoDB ODM
+# Django + MongoDB using Djongo
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'CLIENT': {
+            'host': MONGODB_URI,
+        }
     }
 }
 

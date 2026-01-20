@@ -46,8 +46,8 @@ This Django web application is the final portfolio project developed by Balogun 
 ## Technologies Used
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Django, urllib3, requests, BeautifulSoup
-- **Database**: SQLite
-- **Libraries**: Pillow, dateutil
+- **Database**: MongoDB (Remote Cloud)
+- **Libraries**: Pillow, dateutil, Djongo
 
 ---
 
@@ -72,11 +72,11 @@ pip install -r requirements.txt
 
 > ⚠️ `requirements.txt` is in the root directory.
 
-### 4. Create a `.env` file (if needed)
-Create a `.env` in the same folder as `manage.py` with your environment-specific variables like:
+### 4. Create a `.env` file
+Create a `.env` in the root directory with your MongoDB connection URI:
 ```env
 DEBUG=True
-SECRET_KEY=your-secret-key
+MONGODB_URI=mongodb+srv://your-username:your-password@cluster0.xxxxx.mongodb.net/?appName=Cluster0
 ```
 
 ### 5. Navigate into Django project directory
