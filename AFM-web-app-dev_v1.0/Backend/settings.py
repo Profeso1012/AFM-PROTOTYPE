@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,6 +81,17 @@ WSGI_APPLICATION = 'Backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# MongoDB Connection
+MONGODB_URI = "mongodb+srv://eoluwaseyi:Ez2bduu12b@cluster0.cukhcj8.mongodb.net/?appName=Cluster0"
+
+try:
+    mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
+    mongo_client.admin.command('ping')
+    print("Successfully connected to MongoDB!")
+except Exception as e:
+    print(f"MongoDB connection error: {e}")
+
+# For Django compatibility, we will use Django with MongoDB ODM
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

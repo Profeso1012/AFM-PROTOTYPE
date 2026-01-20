@@ -1,0 +1,11 @@
+{
+  "buildCommand": "pip install -r requirements.txt && python AFM-web-app-dev_v1.0/manage.py collectstatic --noinput",
+  "outputDirectory": "AFM-web-app-dev_v1.0/staticfiles",
+  "framework": "django",
+  "env": {
+    "PYTHON_VERSION": "3.12",
+    "DEBUG": "False",
+    "ALLOWED_HOSTS": ["localhost", "127.0.0.1", ".vercel.app"],
+    "DATABASE_NAME": "db.sqlite3"
+  }
+}
