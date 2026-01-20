@@ -96,7 +96,7 @@ except Exception as e:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',  # Use in-memory SQLite for stateless builds
+        'NAME': BASE_DIR / 'db.sqlite3',  # Persistent file-based database
     }
 }
 
