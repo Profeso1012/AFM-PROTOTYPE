@@ -29,15 +29,13 @@ SECRET_KEY = 'django-insecure-q!vu!5k89yqqe=^xb@na1^r!em5=^x$47ve^vp-vfjy6(b!=x6
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
+    'afm-llc.onrender.com',
     'localhost',
     '127.0.0.1',
-    'afm-production.onrender.com',  # Replace with your actual Render app name
-    '*.onrender.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://afm-production.onrender.com',  # Replace with your actual Render app name
-    'https://*.onrender.com',
+    'https://afm-llc.onrender.com',
 ]
 
 
