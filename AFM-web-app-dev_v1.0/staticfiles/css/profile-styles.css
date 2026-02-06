@@ -1,0 +1,120 @@
+/* Profile Picture Container */
+.profile-picture-container {
+    width: 150px;
+    margin: 0 auto 2rem; /* Center the container horizontally and add bottom margin */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;
+    gap: 1rem; /* Add space between elements */
+}
+
+/* Profile Picture */
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #0c4da2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+/* Form styling */
+#profile-picture-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Button styling */
+#profile-picture-form button {
+    width: auto;
+    min-width: 150px;
+    padding: 0.5rem 1rem;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#profile-picture-form button:hover {
+    background-color: #555;
+}
+
+#submit-btn {
+    background-color: #0c4da2 !important;
+}
+
+#submit-btn:hover {
+    background-color: #0a3d82 !important;
+}
+
+/* Profile Container (Outer container around profile details) */
+.profile-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 2em;
+    background: rgb(65, 141, 192);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Welcome Message */
+.welcome-message {
+    font-size: 2em;
+    margin-bottom: 1em;
+    color: #003366;
+}
+
+/* Profile Form */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+}
+
+/* Form Input Styles */
+.profile-form input {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Active Subscription Styling */
+.active-subscription {
+    margin-top: 2em;
+    font-size: 1.5em;
+    color: #003366;
+}
+
+.subscriptions {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+/* Subscription Card */
+.subscription-card {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 2em;
+    color: #28a745;
+}
+
+/* Red "times" icon for invalid subscription */
+.subscription-card .fa-times-circle {
+    color: #dc3545;
+}
