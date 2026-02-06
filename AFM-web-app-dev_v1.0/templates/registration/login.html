@@ -125,6 +125,28 @@
       .auth-links a:hover {
         text-decoration: underline;
       }
+      
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .main-container {
+          width: 100%;
+          flex-direction: column;
+          gap: 1em;
+          margin: 1em auto;
+          min-height: auto;
+          padding: 0 10px;
+        }
+        
+        .form-container {
+          width: 100%;
+          max-width: none;
+          padding: 1.5em;
+        }
+        
+        .text-block {
+          display: none;
+        }
+      }
 </style>
 <div class="main-container">
     <div class="form-container">

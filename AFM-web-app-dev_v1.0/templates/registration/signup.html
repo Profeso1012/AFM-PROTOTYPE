@@ -178,6 +178,32 @@
     .auth-links a:hover {
         text-decoration: underline;
     }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .signup-title {
+            font-size: 2.5em;
+            margin-top: 0.5em;
+        }
+        
+        .main-container {
+            width: 95%;
+            flex-direction: column;
+            gap: 1em;
+            margin-top: 5em;
+            padding: 1em;
+        }
+        
+        .text-block {
+            display: none;
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: none;
+            padding: 1.5em;
+        }
+    }
 </style>
 
 <h1 class="signup-title">SIGN UP</h1>
