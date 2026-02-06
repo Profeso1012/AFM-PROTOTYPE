@@ -1,0 +1,101 @@
+* for financial_market.html */
+      /* Center the form and make it bigger */
+      body {
+        background-color: #241f66;
+        overflow-x: hidden;
+        width: 100%;
+      }
+      .market-section {
+        background-color: #241f66; /* Light blue background for this section */
+        padding: 40px 1rem; /* Optional: Add vertical padding to give some space around the content */
+        width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+      }
+
+      #market-form {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        flex-direction: column; /* Stack form elements vertically */
+        margin-top: 20px; /* Space above the form */
+      }
+
+      #market-form label {
+        font-size: 1.2em; /* Larger label text */
+        margin-bottom: 10px; /* Space between label and dropdown */
+      }
+
+      #market-form select {
+        padding: 10px; /* Add some padding to the dropdown */
+        font-size: 1.2em; /* Increase font size */
+        border: 2px solid #ccc; /* Light gray border */
+        border-radius: 8px; /* Rounded corners */
+        width: 200px; /* Set width for the dropdown */
+        background-color: #f9f9f9; /* Light background for the dropdown */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+      }
+
+      /* Styling for the custom TradingView widget container */
+      .custom-tradingview-widget-container {
+        width: 90%;
+        max-width: 1500px; /* Set a max-width to prevent it from growing too large */
+        margin: 40px auto; /* Center the widget container */
+        padding: 20px; /* Padding inside the container */
+        border-radius: 16px; /* Curved corners */
+        border: 2px solid #ddd; /* Light border color */
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Slight shadow around the container */
+        background-color:rgb(133, 209, 244); /* Lighter blue background */
+      }
+
+      /* Optional: Adding a smooth transition effect when the widget loads or changes */
+      .ccustom-tradingview-widget-container__widget {
+        transition: all 0.3s ease; /* Smooth transition effect */
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        .custom-tradingview-widget-container {
+          width: 95%;
+          max-width: 100%;
+          margin: 20px auto;
+          padding: 15px;
+        }
+
+        #market-form label {
+          font-size: 1rem;
+        }
+
+        #market-form select {
+          width: 100%;
+          font-size: 1rem;
+          padding: 8px;
+        }
+
+        .market-section {
+          padding: 20px 0;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .custom-tradingview-widget-container {
+          width: 98%;
+          margin: 15px auto;
+          padding: 10px;
+          border-radius: 8px;
+        }
+
+        #market-form {
+          margin-top: 15px;
+        }
+
+        #market-form label {
+          font-size: 0.95rem;
+        }
+
+        #market-form select {
+          width: 100%;
+          font-size: 0.95rem;
+          padding: 8px;
+        }
+      }

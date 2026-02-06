@@ -1,0 +1,220 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  background-image: url("/static/images/background.8ecc619388da.png");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+body::before {
+  content: '';
+  position: fixed; /* Change to fixed */
+  top: 40px; /* Start after the widget */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40px); /* Subtract widget height */
+  background: linear-gradient(135deg, rgba(0, 162, 255, 0.9), rgba(0, 255, 179, 0.8));
+  z-index: 1;
+}
+
+/* Trading widget container styles */
+.tradingview-widget-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 40px; /* Fixed height for the widget */
+}
+
+/* Adjust the main content area */
+.main-content {
+  padding-top: 40px; /* Match the widget height */
+  width: 100%;
+  min-height: calc(100vh - 40px);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+  margin-top: 50px; /* Increased to account for trading widget */
+}
+
+.page-title {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: -30px; /* Adjusted position */
+  left: 0;
+}
+
+h1 {
+  font-size: 1.75rem;
+  color: rgb(4, 0, 0);
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.signup-form {
+  background: white;
+  width: 100%;
+}
+
+.signup-container {
+  background: white;
+  padding: 2rem;  /* Increased padding */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 450px;  /* Fixed width */
+  margin-right: 3rem;
+  margin-top: 2rem; /* Added space from title */
+}
+
+.signup-form {
+  width: 100%;
+}
+
+.content-container {
+  flex: 1;
+  color: rgb(6, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 4rem; /* Shift content to the right */
+}
+
+.content-heading {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;  /* Increased spacing between form elements */
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox-group input {
+  width: auto;
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #333;
+}
+
+.logo {
+  max-width: 120px; /* Slightly smaller to match design */
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.errorlist {
+  list-style: none;
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 60px; /* Increase margin for mobile as widget might be taller */
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+    margin-top: 60px;
+  }
+  
+  .page-title {
+    position: relative;
+    top: 0;
+    margin-bottom: 1rem;
+  }
+
+  body::before {
+    top: 60px;
+    height: calc(100% - 60px);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .signup-container {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+  }
+  
+  .content-heading {
+      font-size: 1.8rem;
+  }
+  
+  .content-container {
+    text-align: center;
+    padding: 0 1rem;
+  }
+}
