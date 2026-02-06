@@ -2,10 +2,15 @@
       /* Center the form and make it bigger */
       body {
         background-color: #241f66;
+        overflow-x: hidden;
+        width: 100%;
       }
       .market-section {
         background-color: #241f66; /* Light blue background for this section */
-        padding: 40px 0; /* Optional: Add vertical padding to give some space around the content */
+        padding: 40px 1rem; /* Optional: Add vertical padding to give some space around the content */
+        width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
       }
 
       #market-form {
@@ -46,4 +51,51 @@
       /* Optional: Adding a smooth transition effect when the widget loads or changes */
       .ccustom-tradingview-widget-container__widget {
         transition: all 0.3s ease; /* Smooth transition effect */
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        .custom-tradingview-widget-container {
+          width: 95%;
+          max-width: 100%;
+          margin: 20px auto;
+          padding: 15px;
+        }
+
+        #market-form label {
+          font-size: 1rem;
+        }
+
+        #market-form select {
+          width: 100%;
+          font-size: 1rem;
+          padding: 8px;
+        }
+
+        .market-section {
+          padding: 20px 0;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .custom-tradingview-widget-container {
+          width: 98%;
+          margin: 15px auto;
+          padding: 10px;
+          border-radius: 8px;
+        }
+
+        #market-form {
+          margin-top: 15px;
+        }
+
+        #market-form label {
+          font-size: 0.95rem;
+        }
+
+        #market-form select {
+          width: 100%;
+          font-size: 0.95rem;
+          padding: 8px;
+        }
       }

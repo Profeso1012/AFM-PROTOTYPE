@@ -72,7 +72,17 @@ class SubscriptionPlan(models.Model):
     features = models.JSONField(default=list)
     
     def __str__(self):
-        return f"{self.name} - ${self.price_monthly}/month"
+        return f"{self.name} - ₦{self.price_monthly}/month"
+    
+    def get_tier_display(self):
+        """Get the readable name for the subscription tier"""
+        tier_names = {
+            'free': 'Free',
+            'basic': 'Basic',
+            'premium': 'Premium',
+            'elite': 'Elite'
+        }
+        return tier_names.get(self.tier, self.tier.capitalize())
     
     class Meta:
         ordering = ['price_monthly']

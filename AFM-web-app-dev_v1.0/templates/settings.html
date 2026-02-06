@@ -198,20 +198,149 @@
         margin-top: 0.5rem;
     }
 
+    @media (max-width: 1024px) {
+        .settings-container {
+            max-width: 90%;
+        }
+    }
+
     @media (max-width: 768px) {
+        .settings-wrapper {
+            padding: 1rem 0;
+        }
+
+        .settings-container {
+            max-width: 95%;
+            padding: 0 0.75rem;
+        }
+
+        .settings-header,
+        .settings-section {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .settings-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
         .profile-picture-wrapper {
             flex-direction: column;
             align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .profile-picture-display img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .file-input-wrapper {
+            width: 100%;
         }
 
         .button-group {
             flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
         }
 
         .button-group button,
         .button-group a {
             width: 100%;
             text-align: center;
+            padding: 0.7rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            padding: 0.7rem;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .settings-container {
+            max-width: 100%;
+            padding: 0 0.5rem;
+        }
+
+        .settings-header,
+        .settings-section {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .settings-header h1 {
+            font-size: 1.3rem;
+        }
+
+        .settings-header p {
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            padding: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .profile-picture-display img {
+            width: 90px;
+            height: 90px;
+        }
+
+        .button-group {
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-danger {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .alert {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
         }
     }
 </style>

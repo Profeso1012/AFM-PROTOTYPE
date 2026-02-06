@@ -35,6 +35,9 @@
   padding: 2rem 1rem;
   background: linear-gradient(180deg, #003366 0%, #0066CC 100%);
   min-height: calc(100vh - 70px); /* Subtract navbar height */
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* News filter styles - Now search input */
@@ -115,6 +118,11 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   padding: 2rem 1rem 1rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 @media (max-width: 1200px) {
@@ -126,12 +134,41 @@
 @media (max-width: 992px) {
   .news-article-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 0.75rem 1rem 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-article-grid {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 0.5rem;
+    gap: 1rem;
+    max-width: 100%;
+  }
+
+  .news-page-container {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .news-search-input-group {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 576px) {
   .news-article-grid {
     grid-template-columns: 1fr;
+  }
+
+  .news-page-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .N-logo {
+    width: 75px;
+    height: 75px;
   }
 }
 
@@ -199,13 +236,21 @@
 /* News pagination styles */
 .news-pagination {
   margin-top: 2rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .news-pagination .page-link {
   color: white;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 0 0.25rem;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  min-width: auto;
 }
 
 .news-pagination .page-item.active .page-link {

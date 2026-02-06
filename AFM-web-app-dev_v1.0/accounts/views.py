@@ -75,9 +75,22 @@ class CheckoutView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tier = self.kwargs.get('tier')
-        plan = get_object_or_404(SubscriptionPlan, tier=tier)
-        context['plan'] = plan
+        try:
+            plan = get_object_or_404(SubscriptionPlan, tier=tier)
+            context['plan'] = plan
+        except:
+            messages.warning(self.request, "Subscription plan not found.")
+            context['plan'] = None
         return context
+
+    def get(self, request, *args, **kwargs):
+        tier = kwargs.get('tier')
+        try:
+            plan = SubscriptionPlan.objects.get(tier=tier)
+        except SubscriptionPlan.DoesNotExist:
+            messages.error(request, "Subscription plan not found.")
+            return redirect('profile')
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         tier = self.kwargs.get('tier')

@@ -212,6 +212,30 @@
                 slides[slideIndex - 1].style.display = "block";
                 timeoutHandle = setTimeout(showSlides, 3000);
             };
+
+            // Auto-scroll news carousel on mobile
+            const newsGrid = document.querySelector('.news-grid');
+            if (newsGrid && window.innerWidth <= 768) {
+                let scrollIndex = 0;
+                const newsCards = document.querySelectorAll('.news-card');
+                
+                function autoScrollNews() {
+                    if (!newsGrid) return;
+                    
+                    const cardWidth = newsCards[0].offsetWidth + 20; // Include gap
+                    scrollIndex++;
+                    
+                    if (scrollIndex * cardWidth > newsGrid.scrollWidth - newsGrid.offsetWidth) {
+                        scrollIndex = 0;
+                    }
+                    
+                    newsGrid.scrollLeft = scrollIndex * cardWidth;
+                    
+                    setTimeout(autoScrollNews, 5000);
+                }
+                
+                autoScrollNews();
+            }
         });
 
         // Listen for changes in the filter select dropdown
